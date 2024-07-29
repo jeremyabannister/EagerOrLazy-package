@@ -1,23 +1,44 @@
 // swift-tools-version: 5.10
-// The swift-tools-version declares the minimum version of Swift required to build this package.
 
+///
 import PackageDescription
 
+
+///
 let package = Package(
     name: "EagerOrLazy-package",
     products: [
-        // Products define the executables and libraries a package produces, making them visible to other packages.
+        
+        ///
         .library(
-            name: "EagerOrLazy-package",
-            targets: ["EagerOrLazy-package"]),
+            name: "EagerOrLazy-module",
+            targets: ["EagerOrLazy-module"]
+        ),
+    ],
+    dependencies: [
+        
+        ///
+        .package(
+            url: "https://github.com/jeremyabannister/ValueType-package",
+            "0.1.0" ..< "0.2.0"
+        )
     ],
     targets: [
-        // Targets are the basic building blocks of a package, defining a module or a test suite.
-        // Targets can depend on other targets in this package and products from dependencies.
+        
+        ///
         .target(
-            name: "EagerOrLazy-package"),
+            name: "EagerOrLazy-module",
+            dependencies: [
+                .product(name: "ValueType-module", package: "ValueType-package"),
+            ]
+        ),
+        
+        ///
         .testTarget(
-            name: "EagerOrLazy-packageTests",
-            dependencies: ["EagerOrLazy-package"]),
+            name: "EagerOrLazy-module-tests",
+            dependencies: [
+                "EagerOrLazy-module",
+            ]
+        ),
     ]
 )
